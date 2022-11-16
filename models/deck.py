@@ -26,13 +26,13 @@ class Deck:
         "2",
     ]
 
-    cards: List[Card]
+    _cards: List[Card]
 
     def __init__(self) -> None:
-        self.cards = []
+        self._cards = []
         for suit in self.SUITS:
             for rank in self.RANKS:
-                self.cards.append(Card(suit, rank))
+                self._cards.append(Card(suit, rank))
 
     def get_cards(self) -> List[Card]:
-        return self.cards
+        return self._cards
