@@ -1,3 +1,4 @@
+from random import shuffle
 from typing import List
 from models.card import Card
 
@@ -36,3 +37,6 @@ class Deck:
 
     def get_cards(self) -> List[Card]:
         return self._cards
+
+    def shuffle(self) -> None:
+        shuffle(self._cards)
