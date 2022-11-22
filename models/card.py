@@ -16,3 +16,6 @@ class Card:
 
     def is_turned_down(self) -> bool:
         return not self._face_up
+
+    def __str__(self) -> str:
+        return self._rank + self._suit
