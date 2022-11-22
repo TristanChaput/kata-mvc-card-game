@@ -7,15 +7,15 @@ class Player:
     _name: str
     _hand: List[Card]
 
-    def __init__(self, name) -> None:
-        self._name = name
-        self._hand = []
+    def __init__(self, name: str) -> None:
+        self._name: str = name
+        self._hand: List[Card] = []
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self._name
 
-    def get_hand(self):
+    def get_hand(self) -> List[Card]:
         return self._hand
 
-    def add_a_card_in_hand(self, card):
+    def add_a_card_in_hand(self, card: Card) -> None:
         self._hand.append(card)
