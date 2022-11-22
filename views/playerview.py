@@ -7,3 +7,6 @@ class PlayerView(IView):
         if not name:
             return None
         return name
+
+    def show_player_hand(self, card):
+        pass

@@ -34,3 +34,9 @@ class Game:
         cards = self._deck.get_cards()
         for i, player in enumerate(self._players):
             player.add_a_card_in_hand(cards[i])
+
+    def show_cards(self) -> None:
+        for player in self._players:
+            player.flip_hand()
+            player_card = player.get_hand()[0]
+            self._view.show_player_hand(player_card)
