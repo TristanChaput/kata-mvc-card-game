@@ -108,8 +108,8 @@ def test_paul_should_have_a_card_with_face_down(monkeypatch, game):
     monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
     game.register_players()
     game.give_a_card()
-    paul_hand = game.get_a_player(index=0).get_hand()
-    assert paul_hand[0].is_turned_down()
+    paul_hand = game.get_a_player(index=0).get_a_card_in_hand(index=0)
+    assert paul_hand.is_turned_down()
 
 
 def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
@@ -119,12 +119,12 @@ def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
     game.give_a_card()
     paul = game.get_a_player(index=0)
     paul.flip_hand()
-    paul_hand = game.get_a_player(index=0).get_hand()
-    assert not paul_hand[0].is_turned_down()
+    paul_hand = game.get_a_player(index=0).get_a_card_in_hand(index=0)
+    assert not paul_hand.is_turned_down()
 
 
 def test_should_view_paul_hand_with_face_up(capsys, playerview, paul):
-    paul.add_a_card_in_hand(Card("♠", "A"))
+    paul.add_a_card_in_hand(Card((3, "♠"), (14, "A")))
     paul.flip_hand()
     playerview.show_player_hand(paul)
     out, err = capsys.readouterr()
@@ -133,7 +133,7 @@ def test_should_view_paul_hand_with_face_up(capsys, playerview, paul):
 
 
 def test_should_view_paul_hand_with_face_down(capsys, playerview, paul):
-    paul.add_a_card_in_hand(Card("♠", "A"))
+    paul.add_a_card_in_hand(Card((3, "♠"), (14, "A")))
     playerview.show_player_hand(paul)
     out, err = capsys.readouterr()
     expected = "Player Paul\nface down card\n"
@@ -148,7 +148,7 @@ def test_all_players_should_face_up_their_cards(monkeypatch, game):
     game.show_cards()
     players = game.get_players()
     for player in players:
-        assert not player.get_hand()[0].is_turned_down()
+        assert not player.get_a_card_in_hand(index=0).is_turned_down()
 
 
 def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
@@ -157,7 +157,7 @@ def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
     game.register_players()
     players = game.get_players()
     for player in players:
-        player.add_a_card_in_hand(Card("♠", "A"))
+        player.add_a_card_in_hand(Card((3, "♠"), (14, "A")))
     game.show_cards()
     out, err = capsys.readouterr()
     expected = (
