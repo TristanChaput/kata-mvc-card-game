@@ -24,6 +24,9 @@ class Game:
                 return
             self._players.append(Player(name=name))
 
+    def get_a_player(self, index) -> Player:
+        return self._players[index]
+
     def get_players(self) -> List[Player]:
         return self._players
 
