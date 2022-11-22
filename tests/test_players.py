@@ -64,3 +64,13 @@ def test_paul_should_have_a_card(paul):
     game.give_a_card()
     paul_hand = paul.get_hand()
     assert len(paul_hand) == 1
+
+
+def test_paul_and_pierre_should_have_a_card_but_not_the_same(paul, pierre):
+    game = Game(players=[paul, pierre])
+    game.give_a_card()
+    paul_hand = paul.get_hand()
+    pierre_hand = pierre.get_hand()
+    assert len(paul_hand) == 1
+    assert len(pierre_hand) == 1
+    assert paul_hand != pierre_hand
