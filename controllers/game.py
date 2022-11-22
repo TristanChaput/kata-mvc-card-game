@@ -32,11 +32,30 @@ class Game:
 
     def give_a_card(self) -> None:
         cards = self._deck.get_cards()
-        for i, player in enumerate(self._players):
-            player.add_a_card_in_hand(cards[i])
+        for player in self._players:
+            player.add_a_card_in_hand(card=cards.pop())
 
     def show_cards(self) -> None:
         for player in self._players:
             player.flip_hand()
-            player_card = player.get_hand()[0]
-            self._view.show_player_hand(player_card)
+            self._view.show_player_hand(player=player)
+
+    def check_for_a_winner(self) -> Player:
+        winner = self.get_a_player(index=0)
+        for player in self._players[1:]:
+            winner_card = winner.get_a_card_in_hand(index=0)
+            player_card = player.get_a_card_in_hand(index=0)
+
+            if winner_card.get_rank_weight() == player_card.get_rank_weight():
+                if winner_card.get_suit_weight() < player_card.get_suit_weight():
+                    winner = player
+            elif winner_card.get_rank_weight() < player_card.get_rank_weight():
+                winner = player
+        return winner
+
+    def run(self):
+        self.register_players()
+        self.give_a_card()
+        self.show_cards()
+        winner = self.check_for_a_winner()
+        self._view.show_winner(player=winner)
