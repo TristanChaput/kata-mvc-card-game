@@ -1,4 +1,5 @@
 from controllers.game import Game
+from models.card import Card
 from models.player import Player
 import pytest
 
@@ -122,8 +123,25 @@ def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
     assert not paul_hand[0].is_turned_down()
 
 
+def test_should_view_paul_hand_with_face_up(capsys, playerview, paul):
+    paul.add_a_card_in_hand(Card("♠", "A"))
+    paul.flip_hand()
+    playerview.show_player_hand(paul)
+    out, err = capsys.readouterr()
+    expected = "Player Paul\nA♠\n"
+    assert out == expected
+
+
+def test_should_view_paul_hand_with_face_down(capsys, playerview, paul):
+    paul.add_a_card_in_hand(Card("♠", "A"))
+    playerview.show_player_hand(paul)
+    out, err = capsys.readouterr()
+    expected = "Player Paul\nface down card\n"
+    assert out == expected
+
+
 def test_all_players_should_face_up_their_cards(monkeypatch, game):
-    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques", "Lea"])
+    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
     game.give_a_card()
@@ -131,3 +149,22 @@ def test_all_players_should_face_up_their_cards(monkeypatch, game):
     players = game.get_players()
     for player in players:
         assert not player.get_hand()[0].is_turned_down()
+
+
+def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
+    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    game.register_players()
+    players = game.get_players()
+    for player in players:
+        player.add_a_card_in_hand(Card("♠", "A"))
+    game.show_cards()
+    out, err = capsys.readouterr()
+    expected = (
+        "Player Paul\nA♠\n"
+        "Player Pierre\nA♠\n"
+        "Player Hugues\nA♠\n"
+        "Player Tom\nA♠\n"
+        "Player Jacques\nA♠\n"
+    )
+    assert out == expected
