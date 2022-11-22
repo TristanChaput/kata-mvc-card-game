@@ -1,10 +1,18 @@
 class Card:
-    suit = str
-    rank = str
+    _suit: str
+    _rank: str
+    _face_up: bool
 
     def __init__(self, suit: str, rank: str) -> None:
-        self.suit: str = suit
-        self.rank: str = rank
+        self._suit: str = suit
+        self._rank: str = rank
+        self._face_up = False
 
     def __eq__(self, __o: object) -> bool:
-        return self.suit == __o.suit and self.rank == __o.rank
+        return self._suit == __o._suit and self._rank == __o._rank
+
+    def flip(self) -> None:
+        self._face_up = not self._face_up
+
+    def is_turned_down(self) -> bool:
+        return not self._face_up

@@ -1,37 +1,43 @@
 from controllers.game import Game
-from models.card import Card
 from models.player import Player
 import pytest
+
+from views.playerview import PlayerView
 
 
 @pytest.fixture
 def paul():
-    return Player("Paul")
+    return Player(name="Paul")
 
 
 @pytest.fixture
 def pierre():
-    return Player("Pierre")
+    return Player(name="Pierre")
 
 
 @pytest.fixture
 def tom():
-    return Player("Tom")
+    return Player(name="Tom")
 
 
 @pytest.fixture
 def jacques():
-    return Player("Jacques")
+    return Player(name="Jacques")
 
 
 @pytest.fixture
 def hugues():
-    return Player("Hugues")
+    return Player(name="Hugues")
 
 
 @pytest.fixture
-def lea():
-    return Player("Lea")
+def playerview():
+    return PlayerView()
+
+
+@pytest.fixture
+def game(playerview):
+    return Game(view=playerview)
 
 
 def test_should_return_paul_when_player_name_paul_is_given():
@@ -43,34 +49,85 @@ def test_should_return_paul_when_player_name_paul_is_given():
     assert player_name == expected
 
 
-def test_should_return_players_when_a_game_with_players_is_created(paul, pierre):
-    game = Game([paul, pierre])
+def test_paul_should_be_registered(monkeypatch, game):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+    game.register_players()
+    player = game.get_a_player(index=0)
+    assert player.get_name() == "Paul"
 
+
+def test_should_return_players_when_a_game_with_players_is_created(
+    monkeypatch, game, paul, pierre
+):
+    inputs = iter(["Paul", "Pierre"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 2)
+    game.register_players()
     players = game.get_players()
     expected = [paul, pierre]
-
     assert players == expected
 
 
-def test_should_throw_an_exception_when_a_game_with_more_than_five_players_is_created(
-    paul, pierre, hugues, tom, jacques, lea
+def test_should_return_five_players_when_a_game_with_more_than_five_players_is_created(
+    monkeypatch, game, paul, pierre, hugues, tom, jacques
 ):
-    with pytest.raises(Exception):
-        Game([paul, pierre, hugues, tom, jacques, lea])
+    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques", "Lea"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    game.register_players()
+    players = game.get_players()
+    expected = [paul, pierre, hugues, tom, jacques]
+    assert players == expected
 
 
-def test_paul_should_have_a_card(paul):
-    game = Game([paul])
+def test_paul_should_have_a_card(monkeypatch, game):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+    game.register_players()
     game.give_a_card()
-    paul_hand = paul.get_hand()
+    paul_hand = game.get_a_player(index=0).get_hand()
     assert len(paul_hand) == 1
 
 
-def test_paul_and_pierre_should_have_a_card_but_not_the_same(paul, pierre):
-    game = Game(players=[paul, pierre])
+def test_paul_and_pierre_should_have_a_card_but_not_the_same(monkeypatch, game):
+    inputs = iter(["Paul", "Pierre"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 2)
+    game.register_players()
     game.give_a_card()
-    paul_hand = paul.get_hand()
-    pierre_hand = pierre.get_hand()
+    paul_hand = game.get_a_player(index=0).get_hand()
+    pierre_hand = game.get_a_player(index=1).get_hand()
     assert len(paul_hand) == 1
     assert len(pierre_hand) == 1
     assert paul_hand != pierre_hand
+
+
+def test_paul_should_have_a_card_with_face_down(monkeypatch, game):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+    game.register_players()
+    game.give_a_card()
+    paul_hand = game.get_a_player(index=0).get_hand()
+    assert paul_hand[0].is_turned_down()
+
+
+def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+    game.register_players()
+    game.give_a_card()
+    paul = game.get_a_player(index=0)
+    paul.flip_hand()
+    paul_hand = game.get_a_player(index=0).get_hand()
+    assert not paul_hand[0].is_turned_down()
+
+
+def test_all_players_should_face_up_their_cards(monkeypatch, game):
+    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques", "Lea"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    game.register_players()
+    game.give_a_card()
+    game.show_cards()
+    players = game.get_players()
+    for player in players:
+        assert not player.get_hand()[0].is_turned_down()

@@ -75,3 +75,9 @@ def test_should_return_a_deck_of_52_cards_in_different_order(list_of_52_cards):
 
     assert len(cards) == expected_length
     assert cards != expected_ordered_list
+
+
+def test_should_return_flipped_card():
+    ace_of_spade = Card("♠", "A")
+    ace_of_spade.flip()
+    assert not ace_of_spade.is_turned_down()
