@@ -19,3 +19,6 @@ class Player:
 
     def add_a_card_in_hand(self, card: Card) -> None:
         self._hand.append(card)
+
+    def __eq__(self, __o: object) -> bool:
+        return self._name == __o._name
