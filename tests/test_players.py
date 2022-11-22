@@ -109,3 +109,25 @@ def test_paul_should_have_a_card_with_face_down(monkeypatch, game):
     game.give_a_card()
     paul_hand = game.get_a_player(index=0).get_hand()
     assert paul_hand[0].is_turned_down()
+
+
+def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+    game.register_players()
+    game.give_a_card()
+    paul = game.get_a_player(index=0)
+    paul.flip_hand()
+    paul_hand = game.get_a_player(index=0).get_hand()
+    assert not paul_hand[0].is_turned_down()
+
+
+def test_all_players_should_face_up_their_cards(monkeypatch, game):
+    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques", "Lea"])
+    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+    game.register_players()
+    game.give_a_card()
+    game.show_cards()
+    players = game.get_players()
+    for player in players:
+        assert not player.get_hand()[0].is_turned_down()
