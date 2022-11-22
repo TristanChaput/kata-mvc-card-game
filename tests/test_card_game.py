@@ -62,3 +62,16 @@ def test_should_return_deck_of_52_cards(list_of_52_cards):
     cards = deck.get_cards()
 
     assert cards == expected
+
+
+def test_should_return_a_deck_of_52_cards_in_different_order(list_of_52_cards):
+    deck = Deck()
+    expected_ordered_list = list_of_52_cards
+    expected_length = 52
+
+    deck.shuffle()
+
+    cards = deck.get_cards()
+
+    assert len(cards) == expected_length
+    assert cards != expected_ordered_list
