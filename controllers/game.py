@@ -20,4 +20,5 @@ class Game:
 
     def give_a_card(self) -> None:
         cards = self._deck.get_cards()
-        self._players[0].add_a_card_in_hand(card=cards[0])
+        for i, player in enumerate(self._players):
+            player.add_a_card_in_hand(cards[i])
