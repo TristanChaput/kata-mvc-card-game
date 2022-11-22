@@ -9,6 +9,7 @@ class Game:
     _players: List[Player]
     _deck: Deck
     _view: IView
+    MAX_PLAYERS_ALLOWED = 5
 
     def __init__(self, view: IView) -> None:
         self._players: List[Player] = []
@@ -17,10 +18,11 @@ class Game:
         self._view: IView = view
 
     def register_players(self) -> None:
-        name = self._view.player_register_name()
-        if not name:
-            return
-        self._players.append(Player(name=name))
+        while len(self._players) < self.MAX_PLAYERS_ALLOWED:
+            name = self._view.player_register_name()
+            if not name:
+                return
+            self._players.append(Player(name=name))
 
     def get_players(self) -> List[Player]:
         return self._players
