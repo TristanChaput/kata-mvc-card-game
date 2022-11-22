@@ -32,12 +32,12 @@ class Deck:
 
     def __init__(self) -> None:
         self._cards: List[Card] = []
-        for weight, suit in self.SUITS.items():
-            for weight, rank in self.RANKS.items():
+        for weight_suit, suit in self.SUITS.items():
+            for weight_rank, rank in self.RANKS.items():
                 self._cards.append(
                     Card(
-                        (weight, suit),
-                        (weight, rank),
+                        (weight_suit, suit),
+                        (weight_rank, rank),
                     )
                 )
 

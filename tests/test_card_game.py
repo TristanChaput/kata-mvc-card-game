@@ -35,12 +35,12 @@ def ranks():
 @pytest.fixture
 def list_of_52_cards(suits, ranks):
     cards = []
-    for weight, suit in suits.items():
-        for weight, rank in ranks.items():
+    for weight_suit, suit in suits.items():
+        for weight_rank, rank in ranks.items():
             cards.append(
                 Card(
-                    (weight, suit),
-                    (weight, rank),
+                    (weight_suit, suit),
+                    (weight_rank, rank),
                 )
             )
     return cards
