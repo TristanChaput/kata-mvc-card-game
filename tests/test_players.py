@@ -1,7 +1,8 @@
 from controllers.game import Game
-from models.card import Card
 from models.player import Player
 import pytest
+
+from views.playerview import PlayerView
 
 
 @pytest.fixture
@@ -34,6 +35,11 @@ def lea():
     return Player("Lea")
 
 
+@pytest.fixture
+def playerview():
+    return PlayerView()
+
+
 def test_should_return_paul_when_player_name_paul_is_given():
     player = Player("Paul")
 
@@ -41,6 +47,14 @@ def test_should_return_paul_when_player_name_paul_is_given():
     player_name = player.get_name()
 
     assert player_name == expected
+
+
+def test_paul_should_be_registered(monkeypatch, playerview):
+    monkeypatch.setattr("builtins.input", lambda _: "Paul")
+    game = Game(view=playerview)
+    game.register_players()
+    players = game.get_players()
+    assert players[0].get_name() == "Paul"
 
 
 def test_should_return_players_when_a_game_with_players_is_created(paul, pierre):
@@ -68,6 +82,7 @@ def test_paul_should_have_a_card(paul):
 
 def test_paul_and_pierre_should_have_a_card_but_not_the_same(paul, pierre):
     game = Game(players=[paul, pierre])
+
     game.give_a_card()
     paul_hand = paul.get_hand()
     pierre_hand = pierre.get_hand()
