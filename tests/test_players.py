@@ -1,4 +1,5 @@
 from controllers.game import Game
+from models.card import Card
 from models.player import Player
 import pytest
 
@@ -56,3 +57,10 @@ def test_should_throw_an_exception_when_a_game_with_more_than_five_players_is_cr
 ):
     with pytest.raises(Exception):
         Game([paul, pierre, hugues, tom, jacques, lea])
+
+
+def test_paul_should_have_a_card(paul):
+    game = Game([paul])
+    game.give_a_card()
+    paul_hand = paul.get_hand()
+    assert len(paul_hand) == 1
