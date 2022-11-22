@@ -11,7 +11,12 @@ class PlayerView(IView):
 
     def show_player_hand(self, player: Player):
         print(f"Player {player.get_name()}")
-        if player.get_hand()[0].is_turned_down():
+        if player.get_a_card_in_hand(index=0).is_turned_down():
             print("face down card")
         else:
-            print(player.get_hand()[0])
+            print(player.get_a_card_in_hand(index=0))
+
+    def show_winner(self, player: Player):
+        print(
+            f"The winner is {player.get_name()}, with a {player.get_a_card_in_hand(index=0)}"
+        )

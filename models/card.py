@@ -11,12 +11,6 @@ class Card:
         self._rank: Tuple[int, str] = rank
         self._face_up = False
 
-    def __eq__(self, __o: object) -> bool:
-        return (
-            self.get_suit_weight() == __o.get_suit_weight()
-            and self.get_rank_weight() == __o.get_rank_weight()
-        )
-
     def flip(self) -> None:
         self._face_up = not self._face_up
 

@@ -6,10 +6,10 @@ from models.card import Card
 class Deck:
 
     SUITS = {
-        1: "♦",
-        2: "♥",
-        3: "♠",
         4: "♣",
+        3: "♠",
+        2: "♥",
+        1: "♦",
     }
 
     RANKS = {

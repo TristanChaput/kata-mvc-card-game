@@ -96,10 +96,8 @@ def test_paul_and_pierre_should_have_a_card_but_not_the_same(monkeypatch, game):
     monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 2)
     game.register_players()
     game.give_a_card()
-    paul_hand = game.get_a_player(index=0).get_hand()
-    pierre_hand = game.get_a_player(index=1).get_hand()
-    assert len(paul_hand) == 1
-    assert len(pierre_hand) == 1
+    paul_hand = game.get_a_player(index=0).get_a_card_in_hand(index=0)
+    pierre_hand = game.get_a_player(index=1).get_a_card_in_hand(index=0)
     assert paul_hand != pierre_hand
 
 
