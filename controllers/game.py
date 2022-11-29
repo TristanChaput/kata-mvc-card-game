@@ -6,9 +6,6 @@ from views.view import IView
 
 class Game:
 
-    _players: List[Player]
-    _deck: Deck
-    _view: IView
     MAX_PLAYERS_ALLOWED = 5
 
     def __init__(self, view: IView) -> None:
@@ -46,10 +43,10 @@ class Game:
             winner_card = winner.get_a_card_in_hand(index=0)
             player_card = player.get_a_card_in_hand(index=0)
 
-            if winner_card.get_rank_weight() == player_card.get_rank_weight():
-                if winner_card.get_suit_weight() < player_card.get_suit_weight():
+            if winner_card.rank.weight == player_card.rank.weight:
+                if winner_card.suit.weight < player_card.suit.weight:
                     winner = player
-            elif winner_card.get_rank_weight() < player_card.get_rank_weight():
+            elif winner_card.rank.weight < player_card.rank.weight:
                 winner = player
         return winner
 

@@ -1,44 +1,40 @@
 from typing import Tuple
 
 
-class Card:
-    _suit: Tuple[int, str]
-    _rank: Tuple[int, str]
-    _face_up: bool
+class Suit:
+    def __init__(self, weight: int, symbol: str) -> None:
+        self.weight = weight
+        self.symbol = symbol
 
-    def __init__(self, suit: Tuple[int, str], rank: Tuple[int, str]) -> None:
-        self._suit: Tuple[int, str] = suit
-        self._rank: Tuple[int, str] = rank
+
+class Rank:
+    def __init__(self, weight: int, symbol: str) -> None:
+        self.weight = weight
+        self.symbol = symbol
+
+
+class Card:
+    def __init__(self, suit: Suit, rank: Rank) -> None:
+        self._suit = suit
+        self._rank = rank
         self._face_up = False
 
     def flip(self) -> None:
         self._face_up = not self._face_up
 
-    def get_rank_weight(self) -> int:
-        return self._rank[0]
-
-    def get_rank_symbol(self) -> str:
-        return self._rank[1]
-
-    def get_suit_weight(self) -> int:
-        return self._suit[0]
-
-    def get_suit_symbol(self) -> str:
-        return self._suit[1]
-
     def is_turned_down(self) -> bool:
         return not self._face_up
 
     @property
-    def rank(self) -> Tuple[int, str]:
+    def rank(self) -> Rank:
         return self._rank
 
     @property
-    def suit(self) -> Tuple[int, str]:
+    def suit(self) -> Suit:
         return self._suit
 
     def __str__(self) -> str:
-        return self.get_rank_symbol() + self.get_suit_symbol()
+        return self.rank.symbol + self.suit.symbol
 
     def __eq__(self, __o: object) -> bool:
         return self.rank == __o.rank and self.suit == __o.suit

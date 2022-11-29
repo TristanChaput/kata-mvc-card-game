@@ -1,5 +1,5 @@
 import pytest
-from models.card import Card
+from models.card import Card, Rank, Suit
 from models.deck import Deck
 
 
@@ -39,8 +39,8 @@ def list_of_52_cards(suits, ranks):
         for weight_rank, rank in ranks.items():
             cards.append(
                 Card(
-                    (weight_suit, suit),
-                    (weight_rank, rank),
+                    Suit(weight_suit, suit),
+                    Rank(weight_rank, rank),
                 )
             )
     return cards
@@ -70,8 +70,8 @@ def test_should_return_deck_of_52_cards(list_of_52_cards):
     cards = deck.get_cards()
 
     for i, card in enumerate(cards):
-        assert card.get_suit_weight() == expected[i].get_suit_weight()
-        assert card.get_rank_weight() == expected[i].get_rank_weight()
+        assert card.suit.weight == expected[i].suit.weight
+        assert card.rank.weight == expected[i].rank.weight
 
 
 def test_should_return_a_deck_of_52_cards_in_different_order(list_of_52_cards):

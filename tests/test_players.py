@@ -1,5 +1,5 @@
 from controllers.game import Game
-from models.card import Card
+from models.card import Card, Rank, Suit
 from models.player import Player
 import pytest
 
@@ -128,9 +128,16 @@ def test_should_flip_paul_hand_with_face_up(monkeypatch, game):
 
 
 def test_should_view_paul_hand_with_face_up(capsys, playerview, paul):
-    paul.add_a_card_in_hand(Card((3, "♠"), (14, "A")))
+    paul.add_a_card_in_hand(
+        Card(
+            Suit(3, "♠"),
+            Rank(14, "A"),
+        )
+    )
     paul.flip_hand()
+
     playerview.show_player_hand(paul)
+
     out, err = capsys.readouterr()
     expected = "Player Paul\nA♠\n"
     assert out == expected
@@ -149,7 +156,9 @@ def test_all_players_should_face_up_their_cards(monkeypatch, game):
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
     game.give_a_card()
+
     game.show_cards()
+
     players = game.get_players()
     for player in players:
         assert not player.get_a_card_in_hand(index=0).is_turned_down()
@@ -161,8 +170,15 @@ def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
     game.register_players()
     players = game.get_players()
     for player in players:
-        player.add_a_card_in_hand(Card((3, "♠"), (14, "A")))
+        player.add_a_card_in_hand(
+            Card(
+                Suit(3, "♠"),
+                Rank(14, "A"),
+            )
+        )
+
     game.show_cards()
+
     out, err = capsys.readouterr()
     expected = (
         "Player Paul\nA♠\n"

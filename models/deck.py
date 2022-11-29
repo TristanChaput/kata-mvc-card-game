@@ -1,6 +1,6 @@
 from random import shuffle
 from typing import List
-from models.card import Card
+from models.card import Card, Rank, Suit
 
 
 class Deck:
@@ -28,16 +28,14 @@ class Deck:
         2: "2",
     }
 
-    _cards: List[Card]
-
     def __init__(self) -> None:
         self._cards: List[Card] = []
         for weight_suit, suit in self.SUITS.items():
             for weight_rank, rank in self.RANKS.items():
                 self._cards.append(
                     Card(
-                        (weight_suit, suit),
-                        (weight_rank, rank),
+                        Suit(weight_suit, suit),
+                        Rank(weight_rank, rank),
                     )
                 )
 

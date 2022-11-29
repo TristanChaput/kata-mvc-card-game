@@ -3,10 +3,6 @@ from models.card import Card
 
 
 class Player:
-
-    _name: str
-    _hand: List[Card]
-
     def __init__(self, name: str) -> None:
         self._name: str = name
         self._hand: List[Card] = []
