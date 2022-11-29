@@ -57,8 +57,10 @@ def test_should_return_true_when_two_ace_of_spade_are_compared():
     ace_of_spade_1 = Card((3, "♠"), (14, "A"))
     ace_of_spade_2 = Card((3, "♠"), (14, "A"))
 
-    assert ace_of_spade_1.get_suit_weight() == ace_of_spade_2.get_suit_weight()
-    assert ace_of_spade_1.get_rank_weight() == ace_of_spade_2.get_rank_weight()
+    assert ace_of_spade_1 == ace_of_spade_2
+
+    # assert ace_of_spade_1.get_suit_weight() == ace_of_spade_2.get_suit_weight()
+    # assert ace_of_spade_1.get_rank_weight() == ace_of_spade_2.get_rank_weight()
 
 
 def test_should_return_deck_of_52_cards(list_of_52_cards):
@@ -80,7 +82,6 @@ def test_should_return_a_deck_of_52_cards_in_different_order(list_of_52_cards):
     deck.shuffle()
 
     cards = deck.get_cards()
-
     assert len(cards) == expected_length
     assert cards != expected_ordered_list
 

@@ -29,5 +29,16 @@ class Card:
     def is_turned_down(self) -> bool:
         return not self._face_up
 
+    @property
+    def rank(self) -> Tuple[int, str]:
+        return self._rank
+
+    @property
+    def suit(self) -> Tuple[int, str]:
+        return self._suit
+
     def __str__(self) -> str:
         return self.get_rank_symbol() + self.get_suit_symbol()
+
+    def __eq__(self, __o: object) -> bool:
+        return self.rank == __o.rank and self.suit == __o.suit

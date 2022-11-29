@@ -53,7 +53,9 @@ def test_should_return_paul_when_player_name_paul_is_given():
 def test_paul_should_be_registered(monkeypatch, game):
     monkeypatch.setattr("builtins.input", lambda _: "Paul")
     monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 1)
+
     game.register_players()
+
     player = game.get_a_player(index=0)
     assert player.get_name() == "Paul"
 
@@ -64,7 +66,9 @@ def test_should_return_players_when_a_game_with_players_is_created(
     inputs = iter(["Paul", "Pierre"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 2)
+
     game.register_players()
+
     players = game.get_players()
     expected = [paul, pierre]
     assert players == expected
@@ -75,7 +79,9 @@ def test_should_return_five_players_when_a_game_with_more_than_five_players_is_c
 ):
     inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques", "Lea"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+
     game.register_players()
+
     players = game.get_players()
     expected = [paul, pierre, hugues, tom, jacques]
     assert players == expected
