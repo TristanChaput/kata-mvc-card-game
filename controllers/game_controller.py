@@ -1,13 +1,13 @@
 from typing import List
 from models.deck import Deck
 from models.player import Player
-from views.view import IView
+from views.playerview import PlayerView
 
 MAX_PLAYERS_ALLOWED = 5
 
 
 class GameController:
-    def __init__(self, view: IView) -> None:
+    def __init__(self, view: PlayerView) -> None:
         self.players = []
         self._deck: Deck = Deck()
         self._deck.shuffle()
