@@ -27,7 +27,7 @@ class GameController:
 
     def register_players(self, players_name: List[Player]):
         for player_name in players_name:
-            if len(self.players) < MAX_PLAYERS_ALLOWED:
+            if self.number_of_players_exceeded():
                 self.players.append(Player(name=player_name))
             else:
                 self.view.message = "Number of Players cannot exceed 5"
