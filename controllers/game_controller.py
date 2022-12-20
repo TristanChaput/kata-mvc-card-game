@@ -25,12 +25,9 @@ class GameController:
     def number_of_players_exceeded(self):
         return len(self.players) < MAX_PLAYERS_ALLOWED
 
-    def register_players(self) -> None:
-        while len(self._players) < self.MAX_PLAYERS_ALLOWED:
-            name = self._view.player_register_name()
-            if not name:
-                return
-            self._players.append(Player(name=name))
+    def register_players(self, players_name: List[Player]):
+        for player_name in players_name:
+            self.players.append(Player(name=player_name))
 
     def get_a_player(self, index) -> Player:
         return self._players[index]

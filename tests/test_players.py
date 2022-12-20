@@ -251,3 +251,20 @@ def test_game_should_not_exceed_five_players(players):
     expected_players = [Player(name=player_name) for player_name in players[:5]]
     assert game_controller.players == expected_players
     assert game_controller.view.message == expected_message
+
+
+@pytest.mark.parametrize(
+    "players",
+    [
+        (["Paul", "Pierre", "Hugues"]),
+        (["Philippe", "Pascal", "Hugo", "Tommy"]),
+    ],
+)
+def test_game_should_register_multiple_players(players):
+    player_view = PlayerView()
+    game_controller = GameController(view=player_view)
+
+    game_controller.register_players(players)
+
+    expected_players = [Player(name=player_name) for player_name in players[:5]]
+    assert game_controller.players == expected_players
