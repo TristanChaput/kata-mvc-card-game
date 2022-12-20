@@ -1,9 +1,11 @@
 from typing import List
 from models.card import Card
+from uuid import uuid4
 
 
 class Player:
     def __init__(self, name: str) -> None:
+        self.id = uuid4()
         self._name: str = name
         self._hand: List[Card] = []
 

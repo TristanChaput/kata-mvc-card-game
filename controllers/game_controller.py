@@ -3,16 +3,27 @@ from models.deck import Deck
 from models.player import Player
 from views.view import IView
 
+MAX_PLAYERS_ALLOWED = 5
 
-class Game:
 
-    MAX_PLAYERS_ALLOWED = 5
-
+class GameController:
     def __init__(self, view: IView) -> None:
-        self._players: List[Player] = []
+        self.players = []
         self._deck: Deck = Deck()
         self._deck.shuffle()
-        self._view: IView = view
+        self.view = view
+        self._players_hands = {}
+
+    def register_player(self, player_name):
+        if self.number_of_players_exceeded():
+            current_player = Player(name=player_name)
+            self.players.append(current_player)
+            self._players_hands[current_player.id] = current_player._hand
+        else:
+            self.view.message = "Number of Players cannot exceed 5"
+
+    def number_of_players_exceeded(self):
+        return len(self.players) < MAX_PLAYERS_ALLOWED
 
     def register_players(self) -> None:
         while len(self._players) < self.MAX_PLAYERS_ALLOWED:
@@ -26,6 +37,11 @@ class Game:
 
     def get_players(self) -> List[Player]:
         return self._players
+
+    def get_players_hands(self):
+        # for player in self.players:
+        #     self.players_hands[player.id] = player._hand
+        return self._players_hands
 
     def give_a_card(self) -> None:
         cards = self._deck.get_cards()

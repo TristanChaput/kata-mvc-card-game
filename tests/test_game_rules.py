@@ -1,5 +1,5 @@
 import pytest
-from controllers.game import Game
+from controllers.game_controller import GameController
 from models.card import Card, Rank, Suit
 
 from models.player import Player
@@ -23,32 +23,32 @@ def playerview():
 
 @pytest.fixture
 def game(playerview):
-    return Game(view=playerview)
+    return GameController(view=playerview)
 
 
-def test_should_return_paul_when_he_has_an_ace_and_pierre_has_a_king(
-    monkeypatch, paul, game
-):
-    inputs = iter(["Paul", "Pierre"])
-    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-    monkeypatch.setattr(Game, "MAX_PLAYERS_ALLOWED", 2)
-    game.register_players()
-    p1 = game.get_a_player(index=0)
-    p2 = game.get_a_player(index=1)
-    p1.add_a_card_in_hand(
-        Card(
-            Suit(3, "♠"),
-            Rank(14, "A"),
-        )
-    )
-    p2.add_a_card_in_hand(
-        Card(
-            Suit(3, "♠"),
-            Rank(13, "K"),
-        )
-    )
-    winner = game.check_for_a_winner()
-    assert winner == paul
+# def test_should_return_paul_when_he_has_an_ace_and_pierre_has_a_king(
+#     monkeypatch, paul, game
+# ):
+#     inputs = iter(["Paul", "Pierre"])
+#     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
+#     monkeypatch.setattr(GameController, "MAX_PLAYERS_ALLOWED", 2)
+#     game.register_players()
+#     p1 = game.get_a_player(index=0)
+#     p2 = game.get_a_player(index=1)
+#     p1.add_a_card_in_hand(
+#         Card(
+#             Suit(3, "♠"),
+#             Rank(14, "A"),
+#         )
+#     )
+#     p2.add_a_card_in_hand(
+#         Card(
+#             Suit(3, "♠"),
+#             Rank(13, "K"),
+#         )
+#     )
+#     winner = game.check_for_a_winner()
+#     assert winner == paul
 
 
 def test_should_return_jacques_when_he_has_an_ace_and_other_players_have_minor_ranks(

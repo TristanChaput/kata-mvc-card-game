@@ -1,6 +1,3 @@
-from typing import Tuple
-
-
 class Suit:
     def __init__(self, weight: int, symbol: str) -> None:
         self.weight = weight
