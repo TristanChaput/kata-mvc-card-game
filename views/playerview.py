@@ -1,8 +1,7 @@
 from models.player import Player
-from views.view import IView
 
 
-class PlayerView(IView):
+class PlayerView:
     def __init__(self) -> None:
         super().__init__()
         self.message = ""
