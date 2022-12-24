@@ -29,10 +29,10 @@ class Deck:
     }
 
     def __init__(self) -> None:
-        self._cards: List[Card] = []
+        self.cards: List[Card] = []
         for weight_suit, suit in self.SUITS.items():
             for weight_rank, rank in self.RANKS.items():
-                self._cards.append(
+                self.cards.append(
                     Card(
                         Suit(weight_suit, suit),
                         Rank(weight_rank, rank),
@@ -40,7 +40,7 @@ class Deck:
                 )
 
     def get_cards(self) -> List[Card]:
-        return self._cards
+        return self.cards
 
     def shuffle(self) -> None:
-        shuffle(self._cards)
+        shuffle(self.cards)
