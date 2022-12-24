@@ -7,31 +7,6 @@ from views.playerview import PlayerView
 
 
 @pytest.fixture
-def paul():
-    return Player(name="Paul")
-
-
-@pytest.fixture
-def pierre():
-    return Player(name="Pierre")
-
-
-@pytest.fixture
-def tom():
-    return Player(name="Tom")
-
-
-@pytest.fixture
-def jacques():
-    return Player(name="Jacques")
-
-
-@pytest.fixture
-def hugues():
-    return Player(name="Hugues")
-
-
-@pytest.fixture
 def playerview():
     return PlayerView()
 
