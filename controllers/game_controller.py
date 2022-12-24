@@ -28,9 +28,6 @@ class GameController:
         for player_name in players_name:
             self.register_player(player_name=player_name)
 
-    def get_a_player(self, index) -> Player:
-        return self._players[index]
-
     def get_players_hands(self):
         for player in self.players:
             self._players_hands[player.id] = player.hand
@@ -48,8 +45,8 @@ class GameController:
             self.view.show_player_hand(player=player)
 
     def check_for_a_winner(self) -> Player:
-        winner = self.get_a_player(index=0)
-        for player in self._players[1:]:
+        winner = self.players[0]
+        for player in self.players[1:]:
             winner_card = winner.get_a_card_in_hand(index=0)
             player_card = player.get_a_card_in_hand(index=0)
 
