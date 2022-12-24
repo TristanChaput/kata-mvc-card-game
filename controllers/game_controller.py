@@ -9,8 +9,8 @@ MAX_PLAYERS_ALLOWED = 5
 class GameController:
     def __init__(self, view: PlayerView) -> None:
         self.players = []
-        self._deck: Deck = Deck()
-        self._deck.shuffle()
+        self.deck: Deck = Deck()
+        self.deck.shuffle()
         self.view = view
         self._players_hands = {}
 
@@ -37,7 +37,7 @@ class GameController:
         return self._players_hands
 
     def give_a_card(self) -> None:
-        cards = self._deck.get_cards()
+        cards = self.deck.get_cards()
         for player in self.players:
             player.add_a_card_in_hand(card=cards.pop())
             self._players_hands[player.id] = player.hand
