@@ -217,7 +217,7 @@ def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
         ),
     ],
 )
-def test_a(players, cards):
+def test_should_return_players_hand_with_player_id(players, cards):
     player_view = PlayerView()
     game_controller = GameController(view=player_view)
     for i, player in enumerate(players):
