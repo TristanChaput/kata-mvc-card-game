@@ -44,7 +44,7 @@ def test_should_return_paul_when_player_name_paul_is_given():
 
 #     game.register_players()
 
-#     players = game.get_players()
+#     players = game.players
 #     expected = [paul, pierre]
 #     assert players == expected
 
@@ -57,7 +57,7 @@ def test_should_return_five_players_when_a_game_with_more_than_five_players_is_c
 
     game.register_players()
 
-    players = game.get_players()
+    players = game.players
     expected = [paul, pierre, hugues, tom, jacques]
     assert players == expected
 
@@ -137,7 +137,7 @@ def test_all_players_should_face_up_their_cards(monkeypatch, game):
 
     game.show_cards()
 
-    players = game.get_players()
+    players = game.players
     for player in players:
         assert not player.get_a_card_in_hand(index=0).is_turned_down()
 
@@ -146,7 +146,7 @@ def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
     inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
-    players = game.get_players()
+    players = game.players
     for player in players:
         player.add_a_card_in_hand(
             Card(

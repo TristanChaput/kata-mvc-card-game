@@ -57,7 +57,7 @@ def test_should_return_jacques_when_he_has_an_ace_and_other_players_have_minor_r
     inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
-    for player in game.get_players()[:4]:
+    for player in game.players[:4]:
         player.add_a_card_in_hand(
             Card(
                 Suit(3, "♠"),
@@ -82,7 +82,7 @@ def test_should_return_jacques_when_he_has_an_ace_of_clubs_tom_and_ace_of_spades
     inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
-    for player in game.get_players()[:3]:
+    for player in game.players[:3]:
         player.add_a_card_in_hand(
             Card(
                 Suit(3, "♠"),
@@ -114,7 +114,7 @@ def test_should_show_jacques_when_he_has_an_ace_of_clubs_tom_and_ace_of_spades_a
     inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
     monkeypatch.setattr("builtins.input", lambda _: next(inputs))
     game.register_players()
-    for player in game.get_players()[:3]:
+    for player in game.players[:3]:
         player.add_a_card_in_hand(
             Card(
                 Suit(3, "♠"),

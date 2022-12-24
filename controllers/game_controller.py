@@ -35,9 +35,6 @@ class GameController:
     def get_a_player(self, index) -> Player:
         return self._players[index]
 
-    def get_players(self) -> List[Player]:
-        return self._players
-
     def get_players_hands(self):
         for player in self.players:
             self._players_hands[player.id] = player._hand
