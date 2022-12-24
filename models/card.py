@@ -9,6 +9,9 @@ class Rank:
         self.weight = weight
         self.symbol = symbol
 
+    def __eq__(self, __o: object) -> bool:
+        return self.weight == __o.weight and self.symbol == __o.symbol
+
 
 class Card:
     def __init__(self, suit: Suit, rank: Rank) -> None:

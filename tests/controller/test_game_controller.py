@@ -166,7 +166,7 @@ def test_all_players_should_show_their_cards():
             ]
         ),
     ],
-    )
+)
 def test_each_player_should_have_a_card_but_not_the_same(players):
     player_view = PlayerView()
     game_controller = GameController(view=player_view)
@@ -221,30 +221,46 @@ def test_each_player_should_have_a_card_but_not_the_same(players):
 #     winner = game.check_for_a_winner()
 #     assert winner == paul
 
-# To refacto
-def test_should_return_jacques_when_he_has_an_ace_and_other_players_have_minor_ranks(
-    monkeypatch, game
+
+@pytest.mark.parametrize(
+    "players, cards",
+    [
+        (
+            [
+                Player(name="Paul"),
+                Player(name="Pierre"),
+            ],
+            [
+                Card(Suit(1, "♦"), Rank(2, "2")),
+                Card(Suit(1, "♦"), Rank(14, "A")),
+            ],
+        ),
+        (
+            [
+                Player(name="Philippe"),
+                Player(name="Pascal"),
+                Player(name="Hugo"),
+            ],
+            [
+                Card(Suit(1, "♦"), Rank(2, "2")),
+                Card(Suit(1, "♦"), Rank(3, "3")),
+                Card(Suit(1, "♦"), Rank(14, "A")),
+            ],
+        ),
+    ],
+)
+def test_should_return_winner_when_he_has_an_ace_and_other_players_have_minor_ranks(
+    players, cards
 ):
-    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
-    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-    game.register_players()
-    for player in game.players[:4]:
-        player.add_a_card_in_hand(
-            Card(
-                Suit(3, "♠"),
-                Rank(13, "K"),
-            )
-        )
-    p5 = game.get_a_player(index=4)
-    p5.add_a_card_in_hand(
-        Card(
-            Suit(3, "♠"),
-            Rank(14, "A"),
-        )
-    )
-    winner = game.check_for_a_winner()
-    jacques = Player("Jacques")
-    assert winner == jacques
+    player_view = PlayerView()
+    game_controller = GameController(view=player_view)
+    game_controller.players = players
+    for i, player in enumerate(players):
+        player.hand = [cards[i]]
+
+    winner = game_controller.check_for_a_winner()
+
+    assert winner.hand[0]._rank == Rank(14, "A")
 
 
 # To refacto
