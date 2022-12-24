@@ -62,13 +62,16 @@ def test_should_return_five_players_when_a_game_with_more_than_five_players_is_c
     assert players == expected
 
 
-# def test_paul_should_have_a_card(monkeypatch, game):
-#     monkeypatch.setattr("builtins.input", lambda _: "Paul")
-#     monkeypatch.setattr(GameController, "MAX_PLAYERS_ALLOWED", 1)
-#     game.register_players()
-#     game.give_a_card()
-#     paul_hand = game.get_a_player(index=0).get_hand()
-#     assert len(paul_hand) == 1
+def test_paul_should_have_a_card_in_hand():
+    player_view = PlayerView()
+    game_controller = GameController(view=player_view)
+    paul = Player(name="Paul")
+    game_controller.players.append(paul)
+
+    game_controller.give_a_card()
+
+    paul_hand = game_controller._players_hands[paul.id]
+    assert paul_hand is not None
 
 
 # def test_paul_and_pierre_should_have_a_card_but_not_the_same(monkeypatch, game):
