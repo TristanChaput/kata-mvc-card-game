@@ -33,14 +33,14 @@ class GameController:
 
     def get_players_hands(self):
         for player in self.players:
-            self._players_hands[player.id] = player._hand
+            self._players_hands[player.id] = player.hand
         return self._players_hands
 
     def give_a_card(self) -> None:
         cards = self._deck.get_cards()
         for player in self.players:
             player.add_a_card_in_hand(card=cards.pop())
-            self._players_hands[player.id] = player._hand
+            self._players_hands[player.id] = player.hand
 
     def show_cards(self) -> None:
         for player in self._players:

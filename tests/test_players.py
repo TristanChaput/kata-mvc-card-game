@@ -16,15 +16,6 @@ def game(playerview):
     return GameController(view=playerview)
 
 
-def test_should_return_paul_when_player_name_paul_is_given():
-    player = Player("Paul")
-
-    expected = "Paul"
-    player_name = player.get_name()
-
-    assert player_name == expected
-
-
 # def test_paul_should_be_registered(monkeypatch, game):
 #     monkeypatch.setattr("builtins.input", lambda _: "Paul")
 #     monkeypatch.setattr(GameController, "MAX_PLAYERS_ALLOWED", 1)
@@ -32,7 +23,7 @@ def test_should_return_paul_when_player_name_paul_is_given():
 #     game.register_players()
 
 #     player = game.get_a_player(index=0)
-#     assert player.get_name() == "Paul"
+#     assert player.name == "Paul"
 
 
 # def test_should_return_players_when_a_game_with_players_is_created(
@@ -199,7 +190,7 @@ def test_should_return_players_hand_with_player_id(players, cards):
     player_view = PlayerView()
     game_controller = GameController(view=player_view)
     for i, player in enumerate(players):
-        player._hand = [cards[i]]
+        player.hand = [cards[i]]
 
     game_controller.players = players
 

@@ -13,7 +13,7 @@ class PlayerView:
         return name
 
     def show_player_hand(self, player: Player):
-        print(f"Player {player.get_name()}")
+        print(f"Player {player.name}")
         if player.get_a_card_in_hand(index=0).is_turned_down():
             print("face down card")
         else:
@@ -21,5 +21,5 @@ class PlayerView:
 
     def show_winner(self, player: Player):
         print(
-            f"The winner is {player.get_name()}, with a {player.get_a_card_in_hand(index=0)}"
+            f"The winner is {player.name}, with a {player.get_a_card_in_hand(index=0)}"
         )
