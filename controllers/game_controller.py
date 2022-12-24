@@ -43,9 +43,9 @@ class GameController:
             self._players_hands[player.id] = player.hand
 
     def show_cards(self) -> None:
-        for player in self._players:
+        for player in self.players:
             player.flip_hand()
-            self._view.show_player_hand(player=player)
+            self.view.show_player_hand(player=player)
 
     def check_for_a_winner(self) -> Player:
         winner = self.get_a_player(index=0)

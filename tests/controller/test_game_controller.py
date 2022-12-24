@@ -60,17 +60,44 @@ def test_should_return_players_hand_with_player_id(players, cards):
     assert players_hands == expected_players_hands
 
 
-def test_all_players_should_face_up_their_cards(monkeypatch, game):
-    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
-    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-    game.register_players()
-    game.give_a_card()
+@pytest.mark.parametrize(
+    "players, cards",
+    [
+        (
+            [
+                Player(name="Paul"),
+                Player(name="Pierre"),
+            ],
+            [
+                Card(Suit(1, "♦"), Rank(2, "2")),
+                Card(Suit(1, "♦"), Rank(3, "3")),
+            ],
+        ),
+        (
+            [
+                Player(name="Philippe"),
+                Player(name="Pascal"),
+                Player(name="Hugo"),
+            ],
+            [
+                Card(Suit(1, "♦"), Rank(2, "2")),
+                Card(Suit(1, "♦"), Rank(3, "3")),
+                Card(Suit(1, "♦"), Rank(4, "4")),
+            ],
+        ),
+    ],
+)
+def test_all_players_should_face_up_their_cards(players, cards):
+    player_view = PlayerView()
+    game_controller = GameController(view=player_view)
+    game_controller.players = players
+    for i, player in enumerate(players):
+        player.hand = [cards[i]]
 
-    game.show_cards()
+    game_controller.show_cards()
 
-    players = game.players
-    for player in players:
-        assert not player.get_a_card_in_hand(index=0).is_turned_down()
+    for player in game_controller.players:
+        assert player.get_a_card_in_hand(index=0)._face_up
 
 
 @pytest.mark.parametrize(
