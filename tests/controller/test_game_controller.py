@@ -144,41 +144,39 @@ def test_game_should_register_multiple_players(players, message):
 
 
 # To refacto
-def test_all_players_should_show_their_cards(capsys, monkeypatch, game):
-    inputs = iter(["Paul", "Pierre", "Hugues", "Tom", "Jacques"])
-    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-    game.register_players()
-    players = game.players
-    for player in players:
-        player.add_a_card_in_hand(
-            Card(
-                Suit(3, "♠"),
-                Rank(14, "A"),
-            )
-        )
+def test_all_players_should_show_their_cards():
+    pass
 
-    game.show_cards()
 
-    out, err = capsys.readouterr()
-    expected = (
-        "Player Paul\nA♠\n"
-        "Player Pierre\nA♠\n"
-        "Player Hugues\nA♠\n"
-        "Player Tom\nA♠\n"
-        "Player Jacques\nA♠\n"
+@pytest.mark.parametrize(
+    "players",
+    [
+        (
+            [
+                Player(name="Paul"),
+                Player(name="Pierre"),
+            ]
+        ),
+        (
+            [
+                Player(name="David"),
+                Player(name="Hugo"),
+                Player(name="Gabin"),
+                Player(name="Noam"),
+            ]
+        ),
+    ],
     )
-    assert out == expected
+def test_each_player_should_have_a_card_but_not_the_same(players):
+    player_view = PlayerView()
+    game_controller = GameController(view=player_view)
+    game_controller.players = players
 
+    game_controller.give_a_card()
 
-def test_paul_and_pierre_should_have_a_card_but_not_the_same(monkeypatch, game):
-    inputs = iter(["Paul", "Pierre"])
-    monkeypatch.setattr("builtins.input", lambda _: next(inputs))
-    monkeypatch.setattr(GameController, "MAX_PLAYERS_ALLOWED", 2)
-    game.register_players()
-    game.give_a_card()
-    paul_hand = game.get_a_player(index=0).get_a_card_in_hand(index=0)
-    pierre_hand = game.get_a_player(index=1).get_a_card_in_hand(index=0)
-    assert paul_hand != pierre_hand
+    cards = [player.hand[0] for player in game_controller.players]
+    unordered_cards = set(cards)
+    assert len(unordered_cards) == len(cards)
 
 
 # def test_paul_should_have_a_card_with_face_down(monkeypatch, game):

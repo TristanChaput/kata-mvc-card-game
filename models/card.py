@@ -35,3 +35,6 @@ class Card:
 
     def __eq__(self, __o: object) -> bool:
         return self.rank == __o.rank and self.suit == __o.suit
+
+    def __hash__(self):
+        return hash((self._rank, self._suit, self.face_up))
