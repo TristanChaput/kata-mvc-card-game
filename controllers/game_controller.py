@@ -18,7 +18,6 @@ class GameController:
         if self.number_of_players_exceeded():
             current_player = Player(name=player_name)
             self.players.append(current_player)
-            self._players_hands[current_player.id] = current_player._hand
         else:
             self.view.message = "Number of Players cannot exceed 5"
 
@@ -27,10 +26,7 @@ class GameController:
 
     def register_players(self, players_name: List[Player]):
         for player_name in players_name:
-            if self.number_of_players_exceeded():
-                self.players.append(Player(name=player_name))
-            else:
-                self.view.message = "Number of Players cannot exceed 5"
+            self.register_player(player_name=player_name)
 
     def get_a_player(self, index) -> Player:
         return self._players[index]
