@@ -14,13 +14,13 @@ class Card:
     def __init__(self, suit: Suit, rank: Rank) -> None:
         self._suit = suit
         self._rank = rank
-        self._face_up = False
+        self.face_up = False
 
     def flip(self) -> None:
-        self._face_up = not self._face_up
+        self.face_up = not self.face_up
 
     def is_turned_down(self) -> bool:
-        return not self._face_up
+        return not self.face_up
 
     @property
     def rank(self) -> Rank:

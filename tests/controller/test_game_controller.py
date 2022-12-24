@@ -97,7 +97,7 @@ def test_all_players_should_face_up_their_cards(players, cards):
     game_controller.show_cards()
 
     for player in game_controller.players:
-        assert player.get_a_card_in_hand(index=0)._face_up
+        assert player.get_a_card_in_hand(index=0).face_up
 
 
 @pytest.mark.parametrize(
