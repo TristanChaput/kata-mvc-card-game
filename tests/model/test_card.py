@@ -59,9 +59,6 @@ def test_should_return_true_when_two_ace_of_spade_are_compared():
 
     assert ace_of_spade_1 == ace_of_spade_2
 
-    # assert ace_of_spade_1.get_suit_weight() == ace_of_spade_2.get_suit_weight()
-    # assert ace_of_spade_1.get_rank_weight() == ace_of_spade_2.get_rank_weight()
-
 
 def test_should_return_deck_of_52_cards(list_of_52_cards):
     deck = Deck()
